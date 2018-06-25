@@ -13,7 +13,6 @@ import Logo from 'grommet/components/icons/Grommet';
 import Anchor from 'grommet/components/Anchor';
 import Hero from 'grommet/components/Hero';
 import Box from 'grommet/components/Box';
-
 import { login } from '../actions/session';
 import { navEnable } from '../actions/nav';
 import { pageLoaded } from './utils';
@@ -68,21 +67,21 @@ class Login extends Component {
   </Box>
 </Hero> */}
 
-        {/* // <Article>
-        //   <Section
-        //     full={true}
-        //     colorIndex='brand'
-        //     texture='url(img/splash.png)'
-        //     pad='large'
-        //     justify='center'
-        //     align='center'
-        //   >
-        //     <Heading tag='h1' strong={true}>Nuvo Web</Heading>
-        //     <Paragraph align='center' size='large'>
-        //       Development with Grommet is cool.
-        //     </Paragraph>
-        //   </Section>
-        // </Article> */}
+         <Article>
+           <Section
+            full={true}
+            colorIndex='brand'
+            texture='url(img/splash.png)'
+            pad='large'
+            justify='center'
+            align='center'
+          >
+            <Heading tag='h1' strong={true}>Nuvo Web</Heading>
+            <Paragraph align='center' size='large'>
+              Development with Grommet is cool.
+            </Paragraph>
+          </Section>
+        </Article>
 
         <Sidebar justify='between' align='center' pad='none' size='large'>
           <span />

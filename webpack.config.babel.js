@@ -101,7 +101,7 @@ export default Object.assign({
         loader: 'babel-loader'
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
           { loader: 'file-loader', options: { name: '[name].css' } },
           { loader: 'sass-loader',
@@ -111,9 +111,20 @@ export default Object.assign({
                 './node_modules'
               ]
             }
-          }
+          },
         ]
-      }
+      },
+    {
+      test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+      use: [
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 8192
+          }
+        }
+      ]
+    }
     ]
   }
 }, devConfig);
