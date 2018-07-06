@@ -29,7 +29,7 @@
     "import/extensions": 0,
     "import/first": 0,
     "import/no-dynamic-require": 0,
-    "jsx-quotes": ["error", "prefer-single"],
+    "jsx-quotes": ["error", "prefer-double"],
     "no-alert": 0,
     "no-use-before-define": 0,
     "no-console": 0,
@@ -42,5 +42,5 @@
     "global-require": 0,
     "object-property-newline": 0,
     "avoidEscape": true
-  }
+    }
 }

@@ -17,21 +17,17 @@ class Main extends Component {
   render() {
     return (
       <App centered={false} inline={true}>
-        <Article>
-          <NavHeader />
-          <Section pad="small">
+        {/* <NavHeader /> */}
             <Router>
               <Switch>
                 <Route exact={true} path="/" component={Homepage} />
-                <Route path="/dashboard" component={Dashboard} />
+                {/* <Route path="/dashboard" component={Dashboard} />
                 <Route path="/login" component={Login} />
                 <Route path="/tasks/:id" component={Task} />
-                <Route path="/tasks" component={Tasks} />
+                <Route path="/tasks" component={Tasks} /> */}
                 <Route path="/*" component={NotFound} />
               </Switch>
             </Router>
-          </Section>
-        </Article>
         <NavFooter />
       </App>
     );

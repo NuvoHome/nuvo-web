@@ -9,13 +9,13 @@ import Image from "grommet/components/Image";
 class NavFooter extends Component {
   render() {
     return (
-      <Footer justify="between" size="large">
+      <Footer justify="center" size="large">
         <Image size="small" src={require("../img/nuvo_black_1.png")} />
         <Box direction="row" align="center" pad={{ between: "medium" }}>
           <Paragraph margin="none">© 2016 Nuvo Inc.</Paragraph>
           <Menu direction="row" size="small" dropAlign={{ right: "right" }}>
             <Anchor href="#">How it Works</Anchor>
-            <Anchor href="#">About Us</Anchor>
+            {/* <Anchor href="#">About Us</Anchor> */}
             <Anchor href="#">Support</Anchor>
           </Menu>
         </Box>
