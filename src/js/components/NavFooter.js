@@ -14,9 +14,9 @@ class NavFooter extends Component {
         <Box direction="row" align="center" pad={{ between: "medium" }}>
           <Paragraph margin="none">© 2016 Nuvo Inc.</Paragraph>
           <Menu direction="row" size="small" dropAlign={{ right: "right" }}>
-            <Anchor href="#">How it Works</Anchor>
-            {/* <Anchor href="#">About Us</Anchor> */}
-            <Anchor href="#">Support</Anchor>
+            {/* <Anchor href="#">How it Works</Anchor>
+            <Anchor href="#">About Us</Anchor>
+            <Anchor href="#">Support</Anchor> */}
           </Menu>
         </Box>
       </Footer>

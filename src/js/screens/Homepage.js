@@ -4,86 +4,172 @@ import Heading from "grommet/components/Heading";
 import Paragraph from "grommet/components/Paragraph";
 import Article from "grommet/components/Article";
 import Headline from "grommet/components/Headline";
-import Button from "grommet/components/Button";
 import Hero from "grommet/components/Hero";
 import Box from "grommet/components/Box";
 import Image from "grommet/components/Image";
 import Columns from "grommet/components/Columns";
-import Tabs from "grommet/components/Tabs";
-import Tab from "grommet/components/Tab";
-import TextInput from "grommet/components/TextInput";
-import FormField from "grommet/components/FormField";
+import Form from "react-formify";
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+import { getMessage } from "grommet/utils/Intl";
+import { addLocaleData } from "react-intl";
+import en from "react-intl/locale-data/en";
+import pt from "react-intl/locale-data/pt";
+import es from "react-intl/locale-data/es";
+addLocaleData([...en, ...pt, ...es]);
 
 class Homepage extends Component {
   render() {
+    const { intl } = this.context;
+    const CustomForm = () => (
+      <MailchimpSubscribe
+        url={url}
+        render={({ subscribe, status, message }) => (
+          <div>
+            <Form
+              defaultErrors={{ email: "" }}
+              defaultValue={{ email: "" }}
+              onSubmit={(user, reset) => {
+                reset();
+                subscribe({ EMAIL: user.email });
+              }}
+              rules={rules}
+            >
+              {(state, errors, isValid) => (
+                <fieldset style={fieldsetStyle}>
+                  <Box
+                    direction="row"
+                    justify="center"
+                    align="center"
+                    margin="none"
+                  >
+                    <input
+                      style={inputStyle}
+                      {...state.email}
+                      placeholder={getMessage(intl, "emailPlaceholder")}
+                    />
+                  </Box>
+                  <Box
+                    direction="row"
+                    justify="center"
+                    align="center"
+                    margin="none"
+                  >
+                    {errors.email ? (
+                      <span className="error">{errors.email}</span>
+                    ) : (
+                      undefined
+                    )}
+                  </Box>
+                  <Box
+                    direction="row"
+                    justify="center"
+                    align="center"
+                    margin="small"
+                  >
+                    <button style={buttonStyle} type="submit">
+                      {getMessage(intl, "getInviteButton")}
+                    </button>
+                  </Box>
+
+                  <Box
+                    direction="row"
+                    justify="center"
+                    align="center"
+                    margin="none"
+                  >
+                    <Paragraph align="center">
+                      {getMessage(intl, "inviteDetails")}
+                    </Paragraph>
+                  </Box>
+                </fieldset>
+              )}
+            </Form>
+            <Box direction="row" justify="center" align="center" margin="small">
+              {status === "sending" && (
+                <div style={{ color: "blue" }}>
+                  {getMessage(intl, "sendingEmailSignup")}
+                </div>
+              )}
+              {status === "error" && (
+                <div
+                  style={{ color: "red" }}
+                  dangerouslySetInnerHTML={{ __html: message }}
+                />
+              )}
+              {status === "success" && (
+                <div style={{ color: "green" }}>
+                  {getMessage(intl, "successEmailSignup")}
+                </div>
+              )}
+            </Box>
+          </div>
+        )}
+      />
+    );
+
+    const url =
+      "https://healeastern.us15.list-manage.com/subscribe/post?u=e13104066f86b9597dd519aaa&amp;id=2dcaf273db";
+
+    const emailExpression = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    const rules = {
+      email: value => {
+        if (!value || value === "") {
+          return getMessage(intl, "emailRequired");
+        } else if (!emailExpression.test(value)) {
+          return getMessage(intl, "emailInvalid");
+        }
+        return undefined;
+      }
+    };
+    const fieldsetStyle = {
+      border: 0
+    };
+
+    const inputStyle = {
+      backgroundColor: "#ffffff",
+      color: "#000"
+    };
+
+    const buttonStyle = {
+      backgroundColor: "#50e3c2",
+      color: "#FFF"
+    };
+
     return (
-      <Article scrollStep={true}>
-        {/* <Section pad='large'
-    justify='center'
-    align='center'> */}
+      <Article scrollStep={false}>
         <Hero
           size="large"
+          flush={true}
           background={
             <Image
               src={require("../img/suburban_house_2.jpg")}
               fit="cover"
-              full="horizontal"
             />
           }
           backgroundColorIndex="dark"
         >
-          {/* <Image
-              src={require("../img/nuvo_black_1.png")}
-              size="small"
-            /> */}
-          <Box direction="row" justify="center" align="center">
-            <Headline margin="none" tag="h1" strong="true">
-              Introducing Notify
+          <Box direction="row" justify="center" align="center" margin="medium">
+            <Headline margin="none" strong={true}>
+              {getMessage(intl, "notifyHeadline")}
             </Headline>
           </Box>
-          <Box direction="row" justify="center" align="center" margin="small">
-            <Heading align="center" tag="h2" strong="false">
-              Presence detection reimagined.
+          <Box direction="row" justify="center" align="center" margin="none">
+            <Heading align="center" strong={false}>
+              {getMessage(intl, "notifyTagline")}
             </Heading>
           </Box>
-          <Box direction="row" justify="center" align="center" margin="small">
-            <Paragraph>
-              Notify installs in any room in your home and provides
-              accurate occupancy detection to power a richer home automation
-              experience for you and your family. Start the lights when you enter the room. Turn up the air
-              in your office only when you're there. And much, more.
-            </Paragraph>
+          <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'large', right: 'large', bottom: 'none'}}>
+            <Paragraph>{getMessage(intl, "notifyDescription")}</Paragraph>
           </Box>
-         
 
-          <Box direction="row" justify="center" align="center">
-      
-
-            <FormField>
-  <TextInput id='item1'
-    name='item-1'
-    value='one'
-    placeholder={'Enter your email for an invite'}
-    // onDOMChange={(e) => true} 
-    />
-    
-</FormField>
-
-
-          </Box>
-          <Button
-              label="Get Invite"
-              onClick={e => true}
-              href="#"
-              primary={true}
-              secondary={false}
-            /> 
-         
-             <Box direction="row" justify="center" align="center" margin="small">
-      
-            <Heading align="center" tag="h6" strong="false">
-              Purchase by invitation only. Limited invites available.
-            </Heading>
+          <Box
+            direction="column"
+            justify="center"
+            align="center"
+            margin="small"
+          >
+            <CustomForm />
           </Box>
         </Hero>
 
@@ -94,15 +180,15 @@ class Homepage extends Component {
           align="center"
           colorIndex="light-1"
         >
-          <Headline margin="none" strong="true">
-            How it Works
+                  <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'small', right: 'small', bottom: 'none'}}>
+
+          <Headline margin="none" strong={true}>
+            {getMessage(intl, "howItWorks")}
           </Headline>
-          <Paragraph>
-            Using advanced artificial intelligence technology, the Nuvo Notify
-            captures and analyzes changes in physical data in your environment
-            to determine occupancy. Notify uses more than 12 different data
-            dimensions to accurately pinpoint occupancy.{" "}
-          </Paragraph>
+
+          <Paragraph>{getMessage(intl, "howItWorksDesc")}</Paragraph>
+          </Box>
+
           <Columns justify="center">
             <Box
               align="center"
@@ -110,7 +196,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Temperature & Humidity
+              {getMessage(intl, "tempHumidity")}
+
               <Image src={require("../img/temp_humidity.svg")} size="thumb" />
             </Box>
             <Box
@@ -119,7 +206,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Pressure & Gas
+              {getMessage(intl, "pressureGas")}
+
               <Image src={require("../img/gas.svg")} size="thumb" />
             </Box>
             <Box
@@ -128,7 +216,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Accelerometer
+              {getMessage(intl, "accel")}
+
               <Image src={require("../img/accel.svg")} size="thumb" />
             </Box>
             {/* <Box
@@ -155,7 +244,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Audio
+              {getMessage(intl, "audio")}
+
               <Image src={require("../img/audio.svg")} size="thumb" />
             </Box>
             <Box
@@ -164,7 +254,7 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Electromagnetic Interference
+              {getMessage(intl, "emi")}
               <Image src={require("../img/EMI.svg")} size="thumb" />
             </Box>
             <Box
@@ -173,7 +263,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Wi-Fi
+              {getMessage(intl, "wifi")}
+
               <Image src={require("../img/wifi.svg")} size="thumb" />
             </Box>
             <Box
@@ -182,7 +273,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              BLE
+              {getMessage(intl, "ble")}
+
               <Image src={require("../img/ble.svg")} size="thumb" />
             </Box>
             {/* <Box
@@ -200,7 +292,8 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Light & Color Temperature
+              {getMessage(intl, "lightColor")}
+
               <Image src={require("../img/light.svg")} size="thumb" />
             </Box>
             <Box
@@ -209,27 +302,37 @@ class Homepage extends Component {
               margin="small"
               colorIndex="light-2"
             >
-              Motion
+              {getMessage(intl, "motion")}
+
               <Image src={require("../img/motion.svg")} size="thumb" />
             </Box>
           </Columns>
-          <Paragraph>and many more...</Paragraph>
+          <Paragraph> {getMessage(intl, "andMore")}</Paragraph>
         </Section>
         <Section pad="large" justify="center" align="center" colorIndex="brand">
-          <Headline margin="none" strong="true">
-            Notify is more than just a motion sensor.
+          <Headline margin="none" strong={true}>
+            {getMessage(intl, "moreThanMotion")}
           </Headline>
-          <Paragraph>
-            Depending on where you place Notify in your home, Notify can provide
-            rich semantic information about its environment. When placed in a
-            kitchen, Notify can provide alerts if your stove is left on. In the
-            bathroom, Notify can warn you if you left the water on. In general,
-            Notify can provide information to your home automation hub about
-            events occurring to enable more advanced automation.
-          </Paragraph>
+          <Paragraph>{getMessage(intl, "moreThanMotionDesc")}</Paragraph>
           <Image src={require("../img/appliance.svg")} />
         </Section>
+        <Section
+          pad="large"
+          justify="center"
+          align="center"
+          colorIndex="light-2"
+        >
+                  <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'none', right: 'none', bottom: 'none'}}>
 
+          <Headline strong={true}>
+            {getMessage(intl, "getInvite")}
+          </Headline>
+          </Box>
+
+          <Box direction="row" justify="center" align="center" margin="none">
+            <CustomForm />
+          </Box>
+        </Section>
         {/* <Section
           pad="large"
           justify="center"
@@ -257,5 +360,9 @@ class Homepage extends Component {
     );
   }
 }
+
+Homepage.contextTypes = {
+  intl: PropTypes.object
+};
 
 export default Homepage;

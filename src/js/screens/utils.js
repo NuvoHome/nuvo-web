@@ -1,6 +1,6 @@
 import { announcePageLoaded } from 'grommet/utils/Announcer';
 
-const DEFAULT_TITLE = 'Nuvo Web';
+const DEFAULT_TITLE = 'Nuvo';
 
 export function pageLoaded(title) {
   if (document) {
