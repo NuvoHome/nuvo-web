@@ -26,7 +26,7 @@ class Main extends Component {
 
     return (
       <App centered={false} inline={true}>
-        {/* <NavHeader /> */}
+        <NavHeader />
             <Router>
               <Switch>
                 <Route exact={true} path="/" component={Homepage} />

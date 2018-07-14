@@ -7,25 +7,55 @@ import Button from "grommet/components/Button";
 
 class NavHeader extends Component {
   render() {
+    const headerStyle = {
+      backgroundColor: "transparent"
+    };
+
+    const logoStyle = {
+      height: '45px'
+    }
+
+    const anchorStyle = {
+      color: '#FFF',
+      margin: '0.5em 1em 0px 0px',
+      fontWeight: 'bold'
+    }
+
+ 
     return (
+      <Header
+        fixed={true}
+        float={true}
+        splash={false}
+        size="xsmall"
+        style={headerStyle}
+      >
+        <Image style={logoStyle} size="small" src={require("../img/nuvo_white.svg")} />
 
-      <Header fixed={true} float={false} splash={false} size="xsmall" colorIndex="light-1">
-            <Image size="small" src={require("../img/nuvo_black_1.png")} />
-
-        <Anchor href="#">How it Works</Anchor>
+        <Anchor style={anchorStyle} href="#">How it Works</Anchor>
 
         {/* <Anchor href="#">About Us</Anchor> */}
-        <Anchor href="#">Contact Us</Anchor>
-        <Box flex={true} justify="end" direction="row" responsive={false} margin={'small'}>
-          {/* <Button
-            label="Get"
+        <Anchor style={anchorStyle} href="#">Contact Us</Anchor>
+
+
+        <Box
+          flex={true}
+          justify="end"
+          direction="row"
+          responsive={false}
+          margin={"small"}
+        >
+                        <Anchor style={anchorStyle} href="#">Login</Anchor>
+
+          <Button
+            label="Sign Up"
             onClick={e => true}
             href="#"
             primary={true}
             secondary={false}
-          /> */}
+          />
         </Box>
-       </Header>
+      </Header>
     );
   }
 }

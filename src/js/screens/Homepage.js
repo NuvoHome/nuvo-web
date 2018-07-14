@@ -136,6 +136,17 @@ class Homepage extends Component {
       color: "#FFF"
     };
 
+    const imageStyle = {
+      height: '800px'
+    }
+
+    const paragraphStyle = {
+      fontWeight: 'bold'
+    }
+
+
+
+
     return (
       <Article scrollStep={false}>
         <Hero
@@ -143,11 +154,13 @@ class Homepage extends Component {
           flush={true}
           background={
             <Image
-              src={require("../img/suburban_house_2.jpg")}
-              fit="cover"
+            src="https://images.unsplash.com/photo-1513024786823-2154d44851af?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9a33978bf445d3ae85615eadc8d27577&auto=format&fit=crop&w=2100&q=80"
+            fit="cover"
             />
           }
           backgroundColorIndex="dark"
+          style={imageStyle}
+
         >
           <Box direction="row" justify="center" align="center" margin="medium">
             <Headline margin="none" strong={true}>
@@ -160,7 +173,7 @@ class Homepage extends Component {
             </Heading>
           </Box>
           <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'large', right: 'large', bottom: 'none'}}>
-            <Paragraph>{getMessage(intl, "notifyDescription")}</Paragraph>
+            <Paragraph style={paragraphStyle}>{getMessage(intl, "notifyDescription")}</Paragraph>
           </Box>
 
           <Box

@@ -5,7 +5,7 @@ module.exports = {
   emailInvalid: 'Email is not valid',
   notifyHeadline: 'Discover Notify',
   notifyTagline: 'Presence detection reimagined.',
-  notifyDescription: "Notify installs in any room in your home and provides accurate occupancy detection to power a richer home automation experience for you and your family. Start the lights when you enter the room. Turn up the air in your office only when you're there. And much, much more.",
+  notifyDescription: "Notify is an intelligent motion sensor that installs in any room in your home and provides accurate occupancy detection for a richer home automation experience for you and your family.",
   getInviteButton: 'Get Invite',
   inviteDetails: 'Purchase by invitation only. Limited invites available.',
   sendingEmailSignup: 'Sending...',
