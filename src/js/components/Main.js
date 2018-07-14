@@ -8,6 +8,13 @@ import NavFooter from "../components/NavFooter";
 import "../../../node_modules/grommet-css";
 import ReactGA from 'react-ga';
 import createHistory from "history/createBrowserHistory"
+import { Security, ImplicitCallback } from '@okta/okta-react';
+
+const config = {
+  issuer: 'https://dev-318806.oktapreview.com/oauth2/default',
+  redirect_uri: window.location.origin + '/implicit/callback',
+  client_id: '{0oafq6bbk8QD3sfXz0h7}'
+}
 
 class Main extends Component {
   constructor(props) {
