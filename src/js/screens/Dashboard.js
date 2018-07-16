@@ -15,6 +15,9 @@ import Value from 'grommet/components/Value';
 import Meter from 'grommet/components/Meter';
 import Spinning from 'grommet/components/icons/Spinning';
 import { getMessage } from 'grommet/utils/Intl';
+import { withAuth } from '@okta/okta-react';
+import ReactPixel from 'react-facebook-pixel';
+
 
 import NavControl from '../components/NavControl';
 import {
@@ -24,6 +27,39 @@ import {
 import { pageLoaded } from './utils';
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { authenticated: null };
+    this.checkAuthentication = this.checkAuthentication.bind(this);
+    this.checkAuthentication();
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  async checkAuthentication() {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.state.authenticated) {
+      this.setState({ authenticated });
+      console.log(this.props.auth.getAccessToken())
+      console.log(this.state)
+    }
+  }
+
+  componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
+  async login() {
+    // Redirect to '/' after login
+    this.props.login('/dashboard');
+  }
+
+  async logout() {
+    // Redirect to '/' after logout
+    this.props.logout('/');
+  }
+
+
   componentDidMount() {
     pageLoaded('Dashboard');
     this.props.dispatch(loadDashboard());
@@ -33,7 +69,10 @@ class Dashboard extends Component {
     this.props.dispatch(unloadDashboard());
   }
 
+
   render() {
+
+
     const { error, tasks } = this.props;
     const { intl } = this.context;
 
@@ -88,8 +127,13 @@ class Dashboard extends Component {
       );
     }
 
+    const button = this.state.authenticated ?
+    <button onClick={this.logout}>Logout</button> :
+    <button onClick={this.login}>Login</button>
+
     return (
       <Article primary={true}>
+        
         <Header
           direction='row'
           justify='between'
@@ -97,6 +141,7 @@ class Dashboard extends Component {
           pad={{ horizontal: 'medium', between: 'small' }}
         >
           <NavControl />
+
         </Header>
         {errorNode}
         <Box pad='medium'>
@@ -111,6 +156,8 @@ class Dashboard extends Component {
           </Paragraph>
         </Box>
         {listNode}
+        {button}
+
       </Article>
     );
   }
@@ -133,4 +180,4 @@ Dashboard.contextTypes = {
 
 const select = state => ({ ...state.dashboard });
 
-export default connect(select)(Dashboard);
+export default connect(select)(withAuth(Dashboard));
