@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import OktaSignIn from '@okta/okta-signin-widget';
-import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-import '@okta/okta-signin-widget/dist/css/okta-theme.css';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import OktaSignIn from "@okta/okta-signin-widget";
+import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
+import "@okta/okta-signin-widget/dist/css/okta-theme.css";
 
 export default class OktaSignInWidget extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ export default class OktaSignInWidget extends Component {
     this.widget = new OktaSignIn({
       baseUrl: this.props.baseUrl
     });
-    this.widget.renderEl({el}, this.props.onSuccess, this.props.onError);
+    this.widget.renderEl({ el }, this.props.onSuccess, this.props.onError);
   }
 
   componentWillUnmount() {
@@ -20,4 +20,4 @@ export default class OktaSignInWidget extends Component {
   render() {
     return <div />;
   }
-};
+}

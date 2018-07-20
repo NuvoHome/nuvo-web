@@ -13,7 +13,7 @@ export default class NavHeader extends Component {
           backgroundColor: "transparent",
           color: "#FFF",
           image: "http://localhost:3000/img/nuvo_white.svg",
-          boxShadow: "",
+          boxShadow: ""
         })
       : (this.state = {
           backgroundColor: "white",
@@ -33,7 +33,7 @@ export default class NavHeader extends Component {
             backgroundColor: "white",
             color: "#333333",
             image: "http://localhost:3000/img/nuvo_black.svg",
-            boxShadow: "0 3px 5px rgba(57, 63, 72, 0.3)",
+            boxShadow: "0 3px 5px rgba(57, 63, 72, 0.3)"
           })
         : this.setState({
             backgroundColor: "transparent",

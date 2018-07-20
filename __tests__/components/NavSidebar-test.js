@@ -1,25 +1,27 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import React from "react";
+import renderer from "react-test-renderer";
+import { Provider } from "react-redux";
+import { Router } from "react-router";
 
-import createMemoryHistory from 'history/createMemoryHistory';
+import createMemoryHistory from "history/createMemoryHistory";
 
-import NavSidebar from '../../src/js/components/NavSidebar';
-import store from '../../src/js/store';
+import NavSidebar from "../../src/js/components/NavSidebar";
+import store from "../../src/js/store";
 
-const history = createMemoryHistory('/');
+const history = createMemoryHistory("/");
 
-const routes = [{
-  path: '/',
-  component: () => <NavSidebar />
-}];
+const routes = [
+  {
+    path: "/",
+    component: () => <NavSidebar />
+  }
+];
 
 // needed because this:
 // https://github.com/facebook/jest/issues/1353
-jest.mock('react-dom');
+jest.mock("react-dom");
 
-test('NavSidebar renders', () => {
+test("NavSidebar renders", () => {
   const component = renderer.create(
     <Provider store={store}>
       <Router routes={routes} history={history} />

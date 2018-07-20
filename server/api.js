@@ -1,15 +1,15 @@
-import express from 'express';
-import { addSession, getTasks, getTask } from './data';
+import express from "express";
+import { addSession, getTasks, getTask } from "./data";
 
 const router = express.Router();
 
-router.post('/sessions', (req, res) => {
+router.post("/sessions", (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password || email === 'error') {
-    res.statusMessage = 'Invalid email or password';
+  if (!email || !password || email === "error") {
+    res.statusMessage = "Invalid email or password";
     res.status(401).end();
   } else {
-    const name = email.split('@')[0].replace(/\.|_/, ' '); // simulated
+    const name = email.split("@")[0].replace(/\.|_/, " "); // simulated
     const now = new Date();
     const token = `token-${now.getTime()}`; // simulated
     const session = { email, name, token };
@@ -18,12 +18,12 @@ router.post('/sessions', (req, res) => {
   }
 });
 
-router.get('/task', (req, res) => {
+router.get("/task", (req, res) => {
   getTasks(req.query).then(tasks => res.json(tasks));
 });
 
-router.get('/task/:id', (req, res) => {
-  getTask(req.params.id).then((result) => {
+router.get("/task/:id", (req, res) => {
+  getTask(req.params.id).then(result => {
     if (!result.task) {
       res.status(404).end();
     } else {
@@ -32,7 +32,7 @@ router.get('/task/:id', (req, res) => {
   });
 });
 
-router.delete('/sessions/*', (req, res) => {
+router.delete("/sessions/*", (req, res) => {
   res.json(undefined);
 });
 

@@ -1,19 +1,14 @@
-import { TASKS_LOAD, TASKS_UNLOAD, TASK_LOAD, TASK_UNLOAD } from '../actions';
-import {
-  watchTasks, unwatchTasks, watchTask, unwatchTask
-} from '../api/tasks';
+import { TASKS_LOAD, TASKS_UNLOAD, TASK_LOAD, TASK_UNLOAD } from "../actions";
+import { watchTasks, unwatchTasks, watchTask, unwatchTask } from "../api/tasks";
 
 export function loadTasks() {
-  return dispatch => (
+  return dispatch =>
     watchTasks()
-      .on('success',
-        payload => dispatch({ type: TASKS_LOAD, payload })
+      .on("success", payload => dispatch({ type: TASKS_LOAD, payload }))
+      .on("error", payload =>
+        dispatch({ type: TASKS_LOAD, error: true, payload })
       )
-      .on('error',
-        payload => dispatch({ type: TASKS_LOAD, error: true, payload })
-      )
-      .start()
-  );
+      .start();
 }
 
 export function unloadTasks() {
@@ -22,16 +17,13 @@ export function unloadTasks() {
 }
 
 export function loadTask(id) {
-  return dispatch => (
+  return dispatch =>
     watchTask(id)
-      .on('success',
-        payload => dispatch({ type: TASK_LOAD, payload })
+      .on("success", payload => dispatch({ type: TASK_LOAD, payload }))
+      .on("error", payload =>
+        dispatch({ type: TASK_LOAD, error: true, payload })
       )
-      .on('error',
-        payload => dispatch({ type: TASK_LOAD, error: true, payload })
-      )
-      .start()
-  );
+      .start();
 }
 
 export function unloadTask(id) {

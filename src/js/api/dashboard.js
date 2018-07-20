@@ -1,9 +1,9 @@
-import { requestWatcher } from './utils';
+import { requestWatcher } from "./utils";
 
 let dashboardWatcher;
 
 export function watchDashboard() {
-  dashboardWatcher = requestWatcher.watch('/api/task?status=Running');
+  dashboardWatcher = requestWatcher.watch("/api/task?status=Running");
   return dashboardWatcher;
 }
 

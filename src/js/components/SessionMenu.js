@@ -1,13 +1,13 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, PropTypes } from "react";
+import { connect } from "react-redux";
 
-import Menu from 'grommet/components/Menu';
-import Anchor from 'grommet/components/Anchor';
-import Box from 'grommet/components/Box';
-import Heading from 'grommet/components/Heading';
-import UserIcon from 'grommet/components/icons/base/User';
+import Menu from "grommet/components/Menu";
+import Anchor from "grommet/components/Anchor";
+import Box from "grommet/components/Box";
+import Heading from "grommet/components/Heading";
+import UserIcon from "grommet/components/icons/base/User";
 
-import { logout } from '../actions/session';
+import { logout } from "../actions/session";
 
 class SessionMenu extends Component {
   constructor() {
@@ -22,18 +22,24 @@ class SessionMenu extends Component {
   }
 
   render() {
-    const { dropAlign, colorIndex, session: { name: userName } } = this.props;
+    const {
+      dropAlign,
+      colorIndex,
+      session: { name: userName }
+    } = this.props;
     return (
       <Menu
         icon={<UserIcon />}
         dropAlign={dropAlign}
         colorIndex={colorIndex}
-        a11yTitle='Session'
+        a11yTitle="Session"
       >
-        <Box pad='medium'>
-          <Heading tag='h3' margin='none'>{userName}</Heading>
+        <Box pad="medium">
+          <Heading tag="h3" margin="none">
+            {userName}
+          </Heading>
         </Box>
-        <Anchor href='#' onClick={this._onLogout} label='Logout' />
+        <Anchor href="#" onClick={this._onLogout} label="Logout" />
       </Menu>
     );
   }
@@ -41,7 +47,7 @@ class SessionMenu extends Component {
 
 SessionMenu.defaultProps = {
   colorIndex: undefined,
-  dropAlign: undefined,
+  dropAlign: undefined
 };
 
 SessionMenu.propTypes = {

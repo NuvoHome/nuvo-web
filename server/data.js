@@ -5,68 +5,60 @@ const _notifiers = {
 
 export const tasks = [
   {
-    id: 'task-1',
-    name: 'Initializing instance',
+    id: "task-1",
+    name: "Initializing instance",
     percentComplete: 0,
-    status: 'Waiting'
+    status: "Waiting"
   },
   {
-    id: 'task-2',
-    name: 'Adding components',
+    id: "task-2",
+    name: "Adding components",
     percentComplete: 0,
-    status: 'Waiting'
+    status: "Waiting"
   },
   {
-    id: 'task-3',
-    name: 'Testing infrastructure',
+    id: "task-3",
+    name: "Testing infrastructure",
     percentComplete: 0,
-    status: 'Waiting'
+    status: "Waiting"
   },
   {
-    id: 'task-4',
-    name: 'Removing instance',
+    id: "task-4",
+    name: "Removing instance",
     percentComplete: 0,
-    status: 'Waiting'
+    status: "Waiting"
   }
 ];
 
 const increments = [5, 10, 20, 25];
 
-setInterval(
-  () => {
-    const task = tasks[
-      Math.floor(Math.random() * tasks.length)
-    ];
+setInterval(() => {
+  const task = tasks[Math.floor(Math.random() * tasks.length)];
 
-    if (!task.percentComplete) {
-      task.status = 'Running';
-    }
+  if (!task.percentComplete) {
+    task.status = "Running";
+  }
 
-    _notifiers.task.forEach(notifier => notifier(task));
-  },
-  2000
-);
+  _notifiers.task.forEach(notifier => notifier(task));
+}, 2000);
 
-setInterval(
-  () => {
-    tasks.forEach((task) => {
-      if (task.status === 'Running') {
-        if (task.percentComplete < 100) {
-          task.percentComplete = Math.min(100, task.percentComplete +
-            increments[
-              Math.floor(Math.random() * increments.length)
-            ]
-          );
-        } else {
-          task.percentComplete = 0;
-          task.status = 'Waiting';
-        }
-        _notifiers.task.forEach(notifier => notifier(task));
+setInterval(() => {
+  tasks.forEach(task => {
+    if (task.status === "Running") {
+      if (task.percentComplete < 100) {
+        task.percentComplete = Math.min(
+          100,
+          task.percentComplete +
+            increments[Math.floor(Math.random() * increments.length)]
+        );
+      } else {
+        task.percentComplete = 0;
+        task.status = "Waiting";
       }
-    });
-  },
-  1000
-);
+      _notifiers.task.forEach(notifier => notifier(task));
+    }
+  });
+}, 1000);
 
 export function addSession(token, data) {
   _sessions[token] = data;
@@ -93,7 +85,7 @@ export function getTasks(filters) {
 
 export function getTask(id) {
   let task;
-  tasks.some((t) => {
+  tasks.some(t => {
     if (t.id === id) {
       task = t;
       return true;

@@ -30,6 +30,7 @@
     "import/first": 0,
     "import/no-dynamic-require": 0,
     "jsx-quotes": ["error", "prefer-double"],
+    "quotes": ["error", "double"],
     "no-alert": 0,
     "no-use-before-define": 0,
     "no-console": 0,

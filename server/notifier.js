@@ -1,11 +1,11 @@
-import ws from 'ws';
-import pathToRegexp from 'path-to-regexp';
+import ws from "ws";
+import pathToRegexp from "path-to-regexp";
 
 function parseQuery(string) {
-  const params = string.split('&');
+  const params = string.split("&");
   const result = {};
-  params.forEach((param) => {
-    const parts = param.split('=');
+  params.forEach(param => {
+    const parts = param.split("=");
     // if we already have this parameter, it must be an array
     if (result[parts[0]]) {
       if (!Array.isArray(result[parts[0]])) {
@@ -26,13 +26,13 @@ class Connection {
     this._routes = routes;
     this._listeners = {};
 
-    this._socket.on('message', this._onMessage.bind(this));
-    this._socket.on('close', this.close.bind(this));
+    this._socket.on("message", this._onMessage.bind(this));
+    this._socket.on("close", this.close.bind(this));
   }
 
   _validate(request) {
     // gets all routes and check if there is a match
-    return this._routes.some((route) => {
+    return this._routes.some(route => {
       const params = [];
       // params will be populated by pathToRegexp with the dynamic portios of
       // the route
@@ -59,9 +59,9 @@ class Connection {
 
   _onMessage(message) {
     const request = JSON.parse(message);
-    if (request.op === 'start') {
+    if (request.op === "start") {
       // Split out query parameters
-      const parts = request.uri.split('?');
+      const parts = request.uri.split("?");
       request.uri = parts[0];
       if (parts[1]) {
         request.params = parseQuery(parts[1]);
@@ -76,10 +76,10 @@ class Connection {
           error: { statusCode: 404, message: `unknown uri ${request.uri}` }
         });
       }
-    } else if (request.op === 'stop') {
+    } else if (request.op === "stop") {
       this._requests = this._requests.filter(req => req.id !== request.id);
-    } else if (request.op === 'ping') {
-      this._socket.send(JSON.stringify({ op: 'ping' }));
+    } else if (request.op === "ping") {
+      this._socket.send(JSON.stringify({ op: "ping" }));
     } else {
       this._socket.send({
         error: { statusCode: 404, message: `unknown op ${request.op}` }
@@ -90,20 +90,19 @@ class Connection {
 
   _exec(request) {
     // stop after the first matching route
-    this._routes.some((route) => {
+    this._routes.some(route => {
       if (request.path === route.path) {
         const socket = this._socket;
-        route.cb(request.params)
-          .then((result) => {
+        route
+          .cb(request.params)
+          .then(result => {
             socket.send(
-              JSON.stringify({ op: 'update', id: request.id, result })
+              JSON.stringify({ op: "update", id: request.id, result })
             );
           })
-          .catch(error => (
-            socket.send(
-              JSON.stringify({ op: 'error', id: request.id, error })
-            )
-          ));
+          .catch(error =>
+            socket.send(JSON.stringify({ op: "error", id: request.id, error }))
+          );
         return true;
       }
       return false;
@@ -123,7 +122,7 @@ class Connection {
 
   test(cb) {
     if (this._socket) {
-      this._requests.forEach((request) => {
+      this._requests.forEach(request => {
         if (cb(request)) {
           this._exec(request);
         }
@@ -132,7 +131,7 @@ class Connection {
   }
 
   on(event, cb) {
-    if (event === 'close') {
+    if (event === "close") {
       this._listeners[event] = cb;
     }
   }
@@ -149,7 +148,7 @@ export default class Notifier {
     const connections = this._connections;
     const connection = new Connection(socket, this._routes);
     connections.push(connection);
-    connection.on('close', () => {
+    connection.on("close", () => {
       const index = connections.indexOf(connection);
       if (index) {
         connections.splice(index, 1);
@@ -159,20 +158,18 @@ export default class Notifier {
 
   listen(server) {
     this._wsServer = new ws.Server({ server });
-    this._wsServer.on('connection', this._onConnection.bind(this));
+    this._wsServer.on("connection", this._onConnection.bind(this));
   }
 
   use(path, cb) {
     if (!this._wsServer) {
       this._routes.push({ path, cb });
     } else {
-      console.error('Cannot add listener to Notifier after listen is active.');
+      console.error("Cannot add listener to Notifier after listen is active.");
     }
   }
 
   test(cb) {
-    this._connections.forEach(
-      connection => connection.test(cb)
-    );
+    this._connections.forEach(connection => connection.test(cb));
   }
 }

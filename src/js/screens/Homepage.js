@@ -15,7 +15,7 @@ import { addLocaleData } from "react-intl";
 import en from "react-intl/locale-data/en";
 import pt from "react-intl/locale-data/pt";
 import es from "react-intl/locale-data/es";
-import NavHeader from '../components/NavHeader';
+import NavHeader from "../components/NavHeader";
 
 addLocaleData([...en, ...pt, ...es]);
 
@@ -131,7 +131,7 @@ class Homepage extends Component {
     const inputStyle = {
       backgroundColor: "#ffffff",
       color: "#000",
-      width: '300px'
+      width: "300px"
     };
 
     const buttonStyle = {
@@ -140,32 +140,28 @@ class Homepage extends Component {
     };
 
     const imageStyle = {
-      height: '800px'
-    }
+      height: "800px"
+    };
 
     const paragraphStyle = {
-      fontWeight: 'bold'
-    }
-
-
-
+      fontWeight: "bold"
+    };
 
     return (
       <Article scrollStep={false}>
-              <NavHeader isHomepage={true} />
+        <NavHeader isHomepage={true} />
 
         <Hero
           size="large"
           flush={true}
           background={
             <Image
-            src="https://images.unsplash.com/photo-1513024786823-2154d44851af?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9a33978bf445d3ae85615eadc8d27577&auto=format&fit=crop&w=2100&q=80"
-            fit="cover"
+              src="https://images.unsplash.com/photo-1513024786823-2154d44851af?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9a33978bf445d3ae85615eadc8d27577&auto=format&fit=crop&w=2100&q=80"
+              fit="cover"
             />
           }
           backgroundColorIndex="dark"
           style={imageStyle}
-
         >
           <Box direction="row" justify="center" align="center" margin="medium">
             <Headline margin="none" strong={true}>
@@ -177,8 +173,20 @@ class Homepage extends Component {
               {getMessage(intl, "notifyTagline")}
             </Heading>
           </Box>
-          <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'large', right: 'large', bottom: 'none'}}>
-            <Paragraph style={paragraphStyle}>{getMessage(intl, "notifyDescription")}</Paragraph>
+          <Box
+            direction="column"
+            justify="center"
+            align="center"
+            margin={{
+              top: "none",
+              left: "large",
+              right: "large",
+              bottom: "none"
+            }}
+          >
+            <Paragraph style={paragraphStyle}>
+              {getMessage(intl, "notifyDescription")}
+            </Paragraph>
           </Box>
 
           <Box
@@ -198,13 +206,22 @@ class Homepage extends Component {
           align="center"
           colorIndex="light-1"
         >
-                  <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'small', right: 'small', bottom: 'none'}}>
+          <Box
+            direction="column"
+            justify="center"
+            align="center"
+            margin={{
+              top: "none",
+              left: "small",
+              right: "small",
+              bottom: "none"
+            }}
+          >
+            <Headline margin="none" strong={true}>
+              {getMessage(intl, "howItWorks")}
+            </Headline>
 
-          <Headline margin="none" strong={true}>
-            {getMessage(intl, "howItWorks")}
-          </Headline>
-
-          <Paragraph>{getMessage(intl, "howItWorksDesc")}</Paragraph>
+            <Paragraph>{getMessage(intl, "howItWorksDesc")}</Paragraph>
           </Box>
 
           <Columns justify="center">
@@ -340,11 +357,18 @@ class Homepage extends Component {
           align="center"
           colorIndex="light-2"
         >
-                  <Box direction="column" justify="center" align="center" margin={{top: 'none', left: 'none', right: 'none', bottom: 'none'}}>
-
-          <Headline strong={true}>
-            {getMessage(intl, "getInvite")}
-          </Headline>
+          <Box
+            direction="column"
+            justify="center"
+            align="center"
+            margin={{
+              top: "none",
+              left: "none",
+              right: "none",
+              bottom: "none"
+            }}
+          >
+            <Headline strong={true}>{getMessage(intl, "getInvite")}</Headline>
           </Box>
 
           <Box direction="row" justify="center" align="center" margin="none">

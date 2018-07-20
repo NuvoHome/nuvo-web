@@ -1,29 +1,28 @@
 // (C) Copyright 2014-2015 Hewlett Packard Enterprise Development LP
 
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, PropTypes } from "react";
+import { connect } from "react-redux";
 
-import Box from 'grommet/components/Box';
-import Button from 'grommet/components/Button';
-import Title from 'grommet/components/Title';
-import Logo from 'grommet/components/icons/Grommet';
+import Box from "grommet/components/Box";
+import Button from "grommet/components/Button";
+import Title from "grommet/components/Title";
+import Logo from "grommet/components/icons/Grommet";
 
-import { navActivate } from '../actions/nav';
+import { navActivate } from "../actions/nav";
 
 class NavControl extends Component {
   render() {
-    const { name, nav: { active } } = this.props;
+    const {
+      name,
+      nav: { active }
+    } = this.props;
 
     let result;
-    const title = <Title>{name || 'Nuvo Web'}</Title>;
+    const title = <Title>{name || "Nuvo Web"}</Title>;
     if (!active) {
       result = (
         <Button onClick={() => this.props.dispatch(navActivate(true))}>
-          <Box
-            direction='row'
-            responsive={false}
-            pad={{ between: 'small' }}
-          >
+          <Box direction="row" responsive={false} pad={{ between: "small" }}>
             <Logo />
             {title}
           </Box>
@@ -41,7 +40,7 @@ NavControl.defaultProps = {
   nav: {
     active: true, // start with nav active
     enabled: true, // start with nav disabled
-    responsive: 'multiple'
+    responsive: "multiple"
   }
 };
 

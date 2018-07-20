@@ -1,10 +1,10 @@
-import { announcePageLoaded } from 'grommet/utils/Announcer';
+import { announcePageLoaded } from "grommet/utils/Announcer";
 
-const DEFAULT_TITLE = 'Nuvo';
+const DEFAULT_TITLE = "Nuvo";
 
 export function pageLoaded(title) {
   if (document) {
-    if (title && typeof title === 'string') {
+    if (title && typeof title === "string") {
       title = `${title} | ${DEFAULT_TITLE}`;
     } else {
       title = DEFAULT_TITLE;
