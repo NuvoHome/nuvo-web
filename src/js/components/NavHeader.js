@@ -12,13 +12,13 @@ export default class NavHeader extends Component {
       ? (this.state = {
           backgroundColor: "transparent",
           color: "#FFF",
-          image: "https://s3.amazonaws.com/assets.nuvo.app/img/nuvo_white.svg",
-          boxShadow: ""
+          image: "http://localhost:3000/img/nuvo_white.svg",
+          boxShadow: "",
         })
       : (this.state = {
           backgroundColor: "white",
           color: "#333333",
-          image: "https://s3.amazonaws.com/assets.nuvo.app/img/nuvo_black.svg",
+          image: "http://localhost:3000/img/nuvo_black.svg",
           boxShadow: ""
         });
   }
@@ -27,36 +27,32 @@ export default class NavHeader extends Component {
   }
 
   handleScroll() {
-    // console.log(window.pageYOffset);
-    // console.log(this.props.isHomepage);
     if (this.props.isHomepage == true) {
       window.pageYOffset >= 100
         ? this.setState({
             backgroundColor: "white",
             color: "#333333",
-            image:
-              "http://localhost:3000/img/nuvo_black.svg",
-            boxShadow: "0 3px 5px rgba(57, 63, 72, 0.3)"
+            image: "http://localhost:3000/img/nuvo_black.svg",
+            boxShadow: "0 3px 5px rgba(57, 63, 72, 0.3)",
           })
         : this.setState({
             backgroundColor: "transparent",
             color: "#FFF",
-            image:
-              "http://localhost:3000/img/nuvo_white.svg",
+            image: "http://localhost:3000/img/nuvo_white.svg",
             boxShadow: ""
           });
     }
   }
 
   render() {
-    console.log(this.state.image)
+    console.log(this.state.image);
     const headerStyle = {
       backgroundColor: this.state.backgroundColor,
       boxShadow: this.state.boxShadow
     };
 
     const logoStyle = {
-      height: "100px"
+      height: "50px"
     };
 
     const anchorStyle = {
@@ -66,9 +62,9 @@ export default class NavHeader extends Component {
     };
 
     const buttonStyle = {
-      // backgroundColor: '#50E3C2',
-      // borderColor: '#50E3C2',
-      // color: this.state.color
+      backgroundColor: "#50E3C2",
+      borderColor: "#50E3C2",
+      color: "#FFF"
     };
 
     return (
@@ -81,7 +77,7 @@ export default class NavHeader extends Component {
         ref="header"
       >
         <Anchor href="/">
-          <Image size="small" src={this.state.image} />{" "}
+          <Image size="small" style={logoStyle} src={this.state.image} />{" "}
         </Anchor>
         {/* <Anchor style={anchorStyle} href="#">
           How it Works
