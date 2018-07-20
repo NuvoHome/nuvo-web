@@ -100,22 +100,8 @@ class Login extends Component {
 </Form>   
           </Box>
           </Section>
-          <Section
-          pad="large"
-          justify="center"
-          align="center"
-          colorIndex="light-2"
-        >
 
-        </Section>
-        <Section
-          pad="large"
-          justify="center"
-          align="center"
-          colorIndex="light-2"
-        >
 
-        </Section>
         </Article>
     )
   }
