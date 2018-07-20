@@ -1,134 +1,90 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import OktaSignInWidget from "../components/OktaSignInWidget";
+import { withAuth } from "@okta/okta-react";
+import Article from "grommet/components/Article";
+import Box from "grommet/components/Box";
+import Section from "grommet/components/Section";
+import NavHeader from "../components/NavHeader";
 
-import Split from 'grommet/components/Split';
-import Sidebar from 'grommet/components/Sidebar';
-import LoginForm from 'grommet/components/LoginForm';
-import Article from 'grommet/components/Article';
-import Section from 'grommet/components/Section';
-import Heading from 'grommet/components/Heading';
-import Paragraph from 'grommet/components/Paragraph';
-import Footer from 'grommet/components/Footer';
-import Logo from 'grommet/components/icons/Grommet';
-import Anchor from 'grommet/components/Anchor';
-import Hero from 'grommet/components/Hero';
-import Box from 'grommet/components/Box';
-import { login } from '../actions/session';
-import { navEnable } from '../actions/nav';
-import { pageLoaded } from './utils';
+export default withAuth(
+  class Login extends Component {
+    constructor(props) {
+      super(props);
+      this.onSuccess = this.onSuccess.bind(this);
+      this.onError = this.onError.bind(this);
+      this.state = {
+        authenticated: null
+      };
+      this.checkAuthentication();
+    }
 
+    async checkAuthentication() {
+      const authenticated = await this.props.auth.isAuthenticated();
+      if (authenticated !== this.state.authenticated) {
+        this.setState({ authenticated });
+      }
+    }
 
-class Login extends Component {
-  constructor() {
-    super();
-    this._onSubmit = this._onSubmit.bind(this);
-  }
+    componentDidUpdate() {
+      this.checkAuthentication();
+    }
 
-  componentDidMount() {
-    pageLoaded('Login');
-    this.props.dispatch(navEnable(false));
-  }
+    onSuccess(res) {
+      if (res.status === "SUCCESS") {
+        return this.props.auth.redirect({
+          sessionToken: res.session.token
+        });
+      } else {
+        // The user can be in another authentication state that requires further action.
+        // For more information about these states, see:
+        //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
+      }
+    }
 
-  componentWillUnmount() {
-    this.props.dispatch(navEnable(true));
-  }
+    onError(err) {
+      console.log("error logging in", err);
+    }
 
-  _onSubmit(fields) {
-    const { dispatch } = this.props;
-    const { router } = this.context;
-    dispatch(login(fields.username, fields.password, () => (
-      router.history.push('/dashboard')
-    )));
-  }
+    render() {
+      const articleStyle = {
+        backgroundColor: "#F5F5F5"
+      };
+      console.log(this.state);
+      if (this.state.authenticated === null) return null;
+      return this.state.authenticated ? (
+        <Redirect to={{ pathname: "/" }} />
+      ) : (
+        <Article style={articleStyle}>
+          <NavHeader isHomepage={false} />
 
-  render() {
-    const { session: { error } } = this.props;
-
-    return (
-      <Split flex='left' separator={true}>
-      
-      {/* <Hero background={<Image src='../../img/carousel-1.png'
-  fit='cover'
-  full={true} />}
-  backgroundColorIndex='dark'>
-  <Box direction='row'
-    justify='center'
-    align='center'>
-    <Box basis='1/2'
-      align='end'
-      pad='medium' />
-    <Box basis='1/2'
-      align='start'
-      pad='medium'>
-      <Heading margin='none'>
-        Sample Heading
-      </Heading>
-    </Box>
-  </Box>
-</Hero> */}
-
-         <Article>
-           <Section
-            full={true}
-            colorIndex='brand'
-            texture='url(img/splash.png)'
-            pad='large'
-            justify='center'
-            align='center'
+          <Section
+            pad="large"
+            justify="center"
+            align="center"
+            colorIndex="light-2"
           >
-            <Heading tag='h1' strong={true}>Nuvo Web</Heading>
-            <Paragraph align='center' size='large'>
-              Development with Grommet is cool.
-            </Paragraph>
+            <Box
+              direction="row"
+              justify="center"
+              align="center"
+              margin="medium"
+            >
+              <OktaSignInWidget
+                baseUrl={this.props.baseUrl}
+                onSuccess={this.onSuccess}
+                onError={this.onError}
+              />
+            </Box>
           </Section>
-        </Article>
-
-        <Sidebar justify='between' align='center' pad='none' size='large'>
-          <span />
-          <LoginForm
-            align='start'
-            logo={<Logo className='logo' colorIndex='brand' />}
-            title='Nuvo Web'
-            onSubmit={this._onSubmit}
-            errors={[error]}
-            usernameType='email'
-            rememberMe={true}
-            forgotPassword={<Anchor href='#'
-            label='Forgot password?' />}
+          <Section
+            pad="large"
+            justify="center"
+            align="center"
+            colorIndex="light-2"
           />
-          <Footer
-            direction='row'
-            size='small'
-            pad={{ horizontal: 'medium', vertical: 'small' }}
-          >
-            <span className='secondary'>&copy; 2017 Grommet Labs</span>
-          </Footer>
-        </Sidebar>
-
-      </Split>
-    );
+        </Article>
+      );
+    }
   }
-}
-
-Login.defaultProps = {
-  session: {
-    error: undefined
-  }
-};
-
-Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  session: PropTypes.shape({
-    error: PropTypes.string
-  })
-};
-
-Login.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-const select = state => ({
-  session: state.session
-});
-
-export default connect(select)(Login);
+);

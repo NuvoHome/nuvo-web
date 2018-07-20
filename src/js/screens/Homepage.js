@@ -15,6 +15,8 @@ import { addLocaleData } from "react-intl";
 import en from "react-intl/locale-data/en";
 import pt from "react-intl/locale-data/pt";
 import es from "react-intl/locale-data/es";
+import NavHeader from '../components/NavHeader';
+
 addLocaleData([...en, ...pt, ...es]);
 
 class Homepage extends Component {
@@ -128,7 +130,8 @@ class Homepage extends Component {
 
     const inputStyle = {
       backgroundColor: "#ffffff",
-      color: "#000"
+      color: "#000",
+      width: '300px'
     };
 
     const buttonStyle = {
@@ -149,6 +152,8 @@ class Homepage extends Component {
 
     return (
       <Article scrollStep={false}>
+              <NavHeader isHomepage={true} />
+
         <Hero
           size="large"
           flush={true}
