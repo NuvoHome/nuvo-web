@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import App from "grommet/components/App";
 import NotFound from "../screens/NotFound";
 import Homepage from "../screens/Homepage";
-import NavHeader from "../components/NavHeader";
 import NavFooter from "../components/NavFooter";
 import "../../../node_modules/grommet-css";
 import ReactGA from "react-ga";
@@ -38,7 +37,7 @@ class Main extends Component {
   }
 
   render() {
-    var history = createHistory();
+    const history = createHistory();
 
     history.listen(function(location) {
       window.ga("set", "page", location.pathname + location.search);

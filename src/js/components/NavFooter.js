@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Footer from "grommet/components/Footer";
 import Paragraph from "grommet/components/Paragraph";
 import Menu from "grommet/components/Menu";
-import Anchor from "grommet/components/Anchor";
 import Box from "grommet/components/Box";
 import Image from "grommet/components/Image";
 

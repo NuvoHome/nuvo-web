@@ -5,28 +5,23 @@ import FormFields from "grommet/components/FormFields";
 import FormField from "grommet/components/FormField";
 import TextInput from "grommet/components/TextInput";
 import Header from "grommet/components/Header";
-import LoginForm from "grommet/components/LoginForm";
 import Article from "grommet/components/Article";
 import Section from "grommet/components/Section";
 import Heading from "grommet/components/Heading";
 import Footer from "grommet/components/Footer";
-import Paragraph from "grommet/components/Paragraph";
 import Anchor from "grommet/components/Anchor";
 import Button from "grommet/components/Button";
 import Box from "grommet/components/Box";
-import { login } from "../actions/session";
 import { navEnable } from "../actions/nav";
-import { pageLoaded } from "./utils";
 import NavHeader from "../components/NavHeader";
 
-class Login extends Component {
+class SignUp extends Component {
   constructor() {
     super();
     this._onSubmit = this._onSubmit.bind(this);
   }
 
   componentDidMount() {
-    pageLoaded("Login");
     this.props.dispatch(navEnable(false));
   }
 
@@ -36,18 +31,10 @@ class Login extends Component {
 
   _onSubmit(fields) {
     const { dispatch } = this.props;
-    const { router } = this.context;
-    dispatch(
-      login(fields.username, fields.password, () =>
-        router.history.push("/dashboard")
-      )
-    );
+    dispatch();
   }
 
   render() {
-    const {
-      session: { error }
-    } = this.props;
     const articleStyle = {
       backgroundColor: "#F5F5F5"
     };
@@ -100,20 +87,20 @@ class Login extends Component {
   }
 }
 
-Login.defaultProps = {
+SignUp.defaultProps = {
   session: {
     error: undefined
   }
 };
 
-Login.propTypes = {
+SignUp.propTypes = {
   dispatch: PropTypes.func.isRequired,
   session: PropTypes.shape({
     error: PropTypes.string
   })
 };
 
-Login.contextTypes = {
+SignUp.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
@@ -121,4 +108,4 @@ const select = state => ({
   session: state.session
 });
 
-export default connect(select)(Login);
+export default connect(select)(SignUp);

@@ -1,13 +1,13 @@
-import path from 'path';
-import webpack from 'webpack';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+import path from "path";
+import webpack from "webpack";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || "production";
 
 let plugins = [
-  new CopyWebpackPlugin([{ from: './public' }]),
+  new CopyWebpackPlugin([{ from: "./public" }]),
   new webpack.DefinePlugin({
-    'process.env': {
+    "process.env": {
       NODE_ENV: JSON.stringify(env)
     }
   })
@@ -16,15 +16,13 @@ let plugins = [
 const loaderOptionsConfig = {
   options: {
     sassLoader: {
-      includePaths: [
-        './node_modules'
-      ]
+      includePaths: ["./node_modules"]
     }
   }
 };
 
 const devConfig = {};
-if (env === 'production') {
+if (env === "production") {
   loaderOptionsConfig.minimize = true;
   plugins.push(
     new webpack.optimize.UglifyJsPlugin({
@@ -38,7 +36,7 @@ if (env === 'production') {
         dead_code: true,
         evaluate: true,
         if_return: true,
-        join_vars: true,
+        join_vars: true
       },
       mangle: {
         screw_ie8: true
@@ -50,19 +48,17 @@ if (env === 'production') {
     })
   );
 } else {
-  plugins = plugins.concat([
-    new webpack.HotModuleReplacementPlugin()
-  ]);
-  devConfig.devtool = 'cheap-module-source-map';
+  plugins = plugins.concat([new webpack.HotModuleReplacementPlugin()]);
+  devConfig.devtool = "cheap-module-source-map";
   devConfig.entry = [
-    require.resolve('react-dev-utils/webpackHotDevClient'),
-    './src/js/index.js'
+    require.resolve("react-dev-utils/webpackHotDevClient"),
+    "./src/js/index.js"
   ];
   devConfig.devServer = {
     compress: true,
-    clientLogLevel: 'none',
-    contentBase: path.resolve('./dist'),
-    publicPath: '/',
+    clientLogLevel: "none",
+    contentBase: path.resolve("./dist"),
+    publicPath: "/",
     quiet: true,
     hot: true,
     watchOptions: {
@@ -70,61 +66,63 @@ if (env === 'production') {
     },
     historyApiFallback: true,
     proxy: {
-      '/api/*': 'http://localhost:8102'
+      "/api/*": "http://localhost:8102"
     }
   };
 }
 
 plugins.push(new webpack.LoaderOptionsPlugin(loaderOptionsConfig));
 
-export default Object.assign({
-  entry: './src/js/index.js',
-  output: {
-    path: path.resolve('./dist'),
-    filename: 'index.js',
-    publicPath: '/'
-  },
-  resolve: {
-    extensions: ['.js', '.scss', '.css', '.json']
-  },
-  plugins,
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.(scss|css)$/,
-        use: [
-          { loader: 'file-loader', options: { name: '[name].css' } },
-          { loader: 'sass-loader',
-            options: {
-              outputStyle: 'compressed',
-              includePaths: [
-                './node_modules'
-              ]
-            }
-          },
-        ]
-      },
-    {
-      test: /\.(jpg|png|gif|svg|pdf|ico)$/,
-      use: [
+export default Object.assign(
+  {
+    entry: "./src/js/index.js",
+    output: {
+      path: path.resolve("./dist"),
+      filename: "index.js",
+      publicPath: "/"
+    },
+    resolve: {
+      extensions: [".js", ".scss", ".css", ".json"]
+    },
+    plugins,
+    node: {
+      fs: "empty",
+      net: "empty",
+      tls: "empty"
+    },
+    module: {
+      rules: [
         {
-          loader: 'url-loader',
-          options: {
-            limit: 8192
-          }
+          test: /\.js/,
+          exclude: /node_modules/,
+          loader: "babel-loader"
+        },
+        {
+          test: /\.(scss|css)$/,
+          use: [
+            { loader: "file-loader", options: { name: "[name].css" } },
+            {
+              loader: "sass-loader",
+              options: {
+                outputStyle: "compressed",
+                includePaths: ["./node_modules"]
+              }
+            }
+          ]
+        },
+        {
+          test: /\.(jpg|png|gif|svg|pdf|ico)$/,
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit: 8192
+              }
+            }
+          ]
         }
       ]
     }
-    ]
-  }
-}, devConfig);
+  },
+  devConfig
+);

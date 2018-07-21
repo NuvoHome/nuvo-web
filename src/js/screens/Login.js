@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { Redirect } from "react-router-dom";
 import OktaSignInWidget from "../components/OktaSignInWidget";
 import { withAuth } from "@okta/okta-react";
@@ -7,7 +7,7 @@ import Box from "grommet/components/Box";
 import Section from "grommet/components/Section";
 import NavHeader from "../components/NavHeader";
 
-export default withAuth(
+
   class Login extends Component {
     constructor(props) {
       super(props);
@@ -19,12 +19,7 @@ export default withAuth(
       this.checkAuthentication();
     }
 
-    async checkAuthentication() {
-      const authenticated = await this.props.auth.isAuthenticated();
-      if (authenticated !== this.state.authenticated) {
-        this.setState({ authenticated });
-      }
-    }
+    
 
     componentDidUpdate() {
       this.checkAuthentication();
@@ -35,25 +30,28 @@ export default withAuth(
         return this.props.auth.redirect({
           sessionToken: res.session.token
         });
-      } else {
-        // The user can be in another authentication state that requires further action.
-        // For more information about these states, see:
-        //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
       }
+      return
     }
 
     onError(err) {
       console.log("error logging in", err);
     }
 
+    async checkAuthentication() {
+      const authenticated = await this.props.auth.isAuthenticated();
+      if (authenticated !== this.state.authenticated) {
+        this.setState({ authenticated });
+      }
+    }
+
     render() {
       const articleStyle = {
         backgroundColor: "#F5F5F5"
       };
-      console.log(this.state);
       if (this.state.authenticated === null) return null;
       return this.state.authenticated ? (
-        <Redirect to={{ pathname: "/" }} />
+        <Redirect to={{ pathname: "/dashboard" }} />
       ) : (
         <Article style={articleStyle}>
           <NavHeader isHomepage={false} />
@@ -87,4 +85,16 @@ export default withAuth(
       );
     }
   }
-);
+
+  Login.propTypes = {
+    auth: PropTypes.any,
+    baseUrl: PropTypes.string.isRequired,
+  }
+  
+  Login.defaultProps = {
+    baseUrl: "https://dev-318806.oktapreview.com"
+  }
+  
+
+  export default withAuth(Login);
+
