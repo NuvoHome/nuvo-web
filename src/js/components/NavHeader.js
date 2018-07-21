@@ -7,7 +7,6 @@ import Button from "grommet/components/Button";
 import { withAuth } from "@okta/okta-react";
 import Menu from "grommet/components/Menu";
 import MenuIcon from "grommet/components/icons/base/Menu";
-import { Redirect } from "react-router-dom";
 
 class NavHeader extends Component {
   constructor(props) {
@@ -33,15 +32,6 @@ class NavHeader extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  async checkAuthentication() {
-    const authenticated = await this.props.auth.isAuthenticated();
-    if (authenticated !== this.state.authenticated) {
-      this.setState({ authenticated });
-      console.log(this.props.auth.getAccessToken());
-      console.log(this.state);
-    }
-  }
-
   async login() {
     // Redirect to '/' after login
   }
@@ -50,11 +40,19 @@ class NavHeader extends Component {
     // Redirect to '/' after logout
     this.props.auth.logout();
     location.reload();
-
   }
 
   componentDidMount() {
     window.addEventListener("scroll", () => this.handleScroll());
+  }
+
+  async checkAuthentication() {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.state.authenticated) {
+      this.setState({ authenticated });
+      console.log(this.props.auth.getAccessToken());
+      console.log(this.state);
+    }
   }
 
   handleScroll() {
@@ -157,7 +155,7 @@ class NavHeader extends Component {
           margin={"none"}
         >
           <Menu style={menuStyle} responsive={true} icon={<MenuIcon />}>
-            {loginLink}          
+            {loginLink}
           </Menu>
         </Box>
       </Header>
@@ -166,7 +164,8 @@ class NavHeader extends Component {
 }
 
 NavHeader.propTypes = {
-  isHomepage: PropTypes.bool.isRequired
+  isHomepage: PropTypes.bool.isRequired,
+  auth: PropTypes.any
 };
 
 NavHeader.defaultProps = {

@@ -136,6 +136,7 @@ class Homepage extends Component {
 
     const buttonStyle = {
       backgroundColor: "#50e3c2",
+      borderColor: "#50e3c2",
       color: "#FFF"
     };
 

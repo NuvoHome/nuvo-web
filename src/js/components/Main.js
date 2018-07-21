@@ -21,7 +21,7 @@ const options = {
 
 const config = {
   issuer: "https://dev-318806.oktapreview.com/oauth2/default",
-  redirect_uri: window.location.origin + "/implicit/callback",
+  redirect_uri: `${window.location.origin}/implicit/callback`,
   client_id: "0oafq6bbk8QD3sfXz0h7"
 };
 
@@ -39,7 +39,7 @@ class Main extends Component {
   render() {
     const history = createHistory();
 
-    history.listen(function(location) {
+    history.listen(function(location){
       window.ga("set", "page", location.pathname + location.search);
       window.ga("send", "pageview", location.pathname + location.search);
     });

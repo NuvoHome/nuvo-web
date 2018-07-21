@@ -74,7 +74,7 @@ class SignUp extends Component {
                 </FormField>
               </FormFields>
               <Footer pad={{ vertical: "medium" }}>
-                <Button label="Submit" type="submit" primary={true} />
+                <Button onClick={this._onSubmit} label="Submit" type="submit" primary={true} />
               </Footer>
               <Box>
                 <Anchor href="/login">Already a member? Login</Anchor>

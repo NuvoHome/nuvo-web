@@ -95,9 +95,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
+Dashboard.propTypes = {};
 
 Dashboard.defaultProps = {};
 
